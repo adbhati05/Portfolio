@@ -6,12 +6,12 @@ import path from 'path'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    react(), 
-    tailwindcss()],
-    resolve: {
-      // Essentially, every time I import a component or file under the src directory, I can use the alias "@" instead of writing out the full path.
-      alias: {
-        "@": path.resolve(__dirname, './src')
-      },
+    react(),
+    tailwindcss(),
+  ],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
     },
+  },
 });
