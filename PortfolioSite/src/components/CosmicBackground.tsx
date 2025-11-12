@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import { ThemeToggle } from "./ThemeToggle";
 
 // Defining Star props: id, size, x, y, opacity, animationDuration.
 interface Star {
