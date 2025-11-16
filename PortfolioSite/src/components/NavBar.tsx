@@ -19,6 +19,7 @@ export const NavBar = () => {
   // State variable to track if the mobile menu is open or closed.
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // This useEffect hook adds an event listener to track scroll position and update isScrolled state accordingly.
   useEffect(() => {
     const handleScroll = () => {
       // If the user has scrolled more than 10 pixels down, set isScrolled to true, else set it to false.
@@ -32,28 +33,62 @@ export const NavBar = () => {
     };
   }, []);
 
+  // This function disables background scrolling when the mobile menu is open.
+  useEffect(() => {
+    if (isMenuOpen) {
+      // Lock background scrolling when menu is open.
+      document.body.style.overflow = "hidden";
+    } else {
+      // Restore scrolling when menu is closed.
+      document.body.style.overflow = "";
+    }
+
+    // Cleanup function to reset overflow when component unmounts.
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  // This function ensures that when the window is resized to a width >= 768px (desktop view), the mobile menu is closed and scrolling is restored.
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+
+    // Adding resize event listener and then cleaning it up on unmount.
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (!isMenuOpen) return;
+
+    // When menu opens, refresh theme state in children
+    window.dispatchEvent(new Event("storage"));
+  }, [isMenuOpen]);
+
   return (
     <nav
       className={cn(
-        "fixed w-full z-40 transition-all duration-300",
-        isScrolled ? "py-3 bg-background/80 backdrop-blur-md shadow-xs" : "py-5"
+        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
+        isScrolled ? "py-4 bg-background/80 backdrop-blur-md shadow-xs" : "py-4"
       )}
     >
       <div className="container flex items-center justify-between">
-        {/* Logo (to be determined) / Brand Name (in this case my name and Portfolio). Also serves as a link to the top of the page (hero section). */}
         <a
           className="text-xl font-bold text-primary flex items-center"
           href="#hero"
         >
-          {" "}
-          {/* Having my name have primary color styling and 'Portfolio' have foreground color styling for aesthetics. */}
           <span className="relative z-10 transform transition-transform duration-150 ease-in-out hover:scale-105 active:scale-95">
             <span className="text-glow text-foreground"> Aditya Bhati's </span>{" "}
             Portfolio
           </span>
         </a>
 
-        {/* Desktop Nav -  stays hidden when screen size is medium or less, horizontally laid out */}
+        {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-8">
           {navItems.map((item, key) => (
             <a
@@ -64,17 +99,14 @@ export const NavBar = () => {
               {item.name}
             </a>
           ))}
-          {/* Theme Toggle for desktop */}
           <ThemeToggle />
         </div>
 
-        {/* Mobile Nav - opened/closed via menu button, stays hidden when screen size is medium or less, vertically laid out */}
+        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-50"
-          aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
+          className="md:hidden p-2 text-foreground z-[1000]"
         >
-          {" "}
           {isMenuOpen ? (
             <X
               size={24}
@@ -85,12 +117,14 @@ export const NavBar = () => {
               size={24}
               className="transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
             />
-          )}{" "}
+          )}
         </button>
 
+        {/* Mobile Menu Overlay - Essentially, when opened, the menu overlays all of the content (via z-index being set to 999) and occupies the entire viewport. */}
+        {/* Also, background scrolling is disabled when the menu is open to prevent scrolling of the underlying content. */}
         <div
           className={cn(
-            "fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col items-center justify-center",
+            "fixed top-0 left-0 w-full h-screen bg-background z-[999] flex flex-col items-center justify-center",
             "transition-all duration-300 md:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
@@ -102,13 +136,13 @@ export const NavBar = () => {
               <a
                 key={key}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
                 onClick={() => setIsMenuOpen(false)}
+                className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
               >
                 {item.name}
               </a>
             ))}
-            {/* Theme Toggle for mobile menu, has padding on the top to separate it from other items in the menu.*/}
+
             <div className="pt-5">
               <ThemeToggle />
             </div>

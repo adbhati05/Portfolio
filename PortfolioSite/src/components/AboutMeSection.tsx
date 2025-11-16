@@ -19,6 +19,7 @@ export const AboutMeSection = () => {
     "Passionate CSE Student"
   ];
   
+  // useEffect hook to handle typing and deleting effect.
   useEffect(() => {
     // Getting the current text to type/delete based on textIndex.
     const currentText = textOptions[textIndex];
@@ -55,9 +56,7 @@ export const AboutMeSection = () => {
   }, [text, isDeleting, textIndex]);
 
   return (
-    // On the left side, have an image of yourself, preferably a professional headshot.
-    // On the right, include a cursor typing animation of the different positions you wish to fill in, have a brief description of how many year of experience you have with web development and with deep learning. Also make sure to touch on your goals and how you're currently seeking summer and fall 2026 internships/co-ops.
-    // Lastly, include some fun statistics at the bottom like number of major projects, courses completed, hackathon finalist etc.
+    // GET A PROFESSIONAL HEADSHOT ASAP
     <section id="about" className="py-24 px-4 relative">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
@@ -65,16 +64,16 @@ export const AboutMeSection = () => {
         </h2>
         {/* Headshot */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div>
+          <div className="flex items-center justify-center">
             <img
               src={Headshot}
               alt="Headshot"
-              className="rounded-lg shadow-lg mb-6"
+              className="rounded-lg shadow-lg"
             />
           </div>
 
           {/* Description */}
-          <div className="space-y-6">
+          <div className="flex flex-col justify-center space-y-6">
             <h3 className="text-3xl text-primary font-semibold">
               { text } <span className="animate-blink"> | </span>
             </h3>
