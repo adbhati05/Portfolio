@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { cn } from "../lib/utils";
+import { ThemeToggle } from "./ThemeToggle";
 
 // Setting up an array that holds the navigation bar's items and their corresponding hrefs.
 const navItems = [
@@ -53,16 +54,18 @@ export const NavBar = () => {
         </a>
 
         {/* Desktop Nav -  stays hidden when screen size is medium or less, horizontally laid out */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex items-center space-x-8">
           {navItems.map((item, key) => (
             <a
               key={key}
               href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors duration-300"
+              className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
             >
               {item.name}
             </a>
           ))}
+          {/* Theme Toggle for desktop */}
+          <ThemeToggle />
         </div>
 
         {/* Mobile Nav - opened/closed via menu button, stays hidden when screen size is medium or less, vertically laid out */}
@@ -72,7 +75,17 @@ export const NavBar = () => {
           aria-label={isMenuOpen ? "Close Menu" : "Open Menu"}
         >
           {" "}
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}{" "}
+          {isMenuOpen ? (
+            <X
+              size={24}
+              className="transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+            />
+          ) : (
+            <Menu
+              size={24}
+              className="transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+            />
+          )}{" "}
         </button>
 
         <div
@@ -84,17 +97,21 @@ export const NavBar = () => {
               : "opacity-0 pointer-events-none"
           )}
         >
-          <div className="flex flex-col space-y-8 text-xl">
+          <div className="flex flex-col justify-center items-center space-y-8 text-xl">
             {navItems.map((item, key) => (
               <a
                 key={key}
                 href={item.href}
-                className="text-foreground/80 hover:text-primary transition-colors duration-300"
+                className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
                 onClick={() => setIsMenuOpen(false)}
               >
                 {item.name}
               </a>
             ))}
+            {/* Theme Toggle for mobile menu, has padding on the top to separate it from other items in the menu.*/}
+            <div className="pt-5">
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </div>

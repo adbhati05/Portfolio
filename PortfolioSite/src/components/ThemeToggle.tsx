@@ -37,19 +37,23 @@ export const ThemeToggle = () => {
 
   return (
     // Below is the button for toggling themes, it leverages isDarkMode to distinguish between the two icons and toggleTheme to switch the theme when it's clicked.
-    // cn utility function is used here to ensure the button remains in the top-right corner of the screen and has proper styling.
+    // cn utility function is used here to ensure the button has proper styling and integrates with the NavBar.
     <button
       onClick={toggleTheme}
       className={cn(
-        "fixed max-sm:hidden top-5 right-5 z-50 p-2 rounded-full transition-colors duration-300",
-        "focus:outline-hidden",
-        "transform transition-transform duration-150 ease-in-out hover:scale-115 active:scale-95"
+        // Layout and styling for the button.
+        "p-2 rounded-full transition-colors duration-300",
+        // Make the button a group so child icons can use group-hover/group-active.
+        "group",
+        // Keyboard focus styling.
+        "focus:outline-none"
       )}
+      aria-label={isDarkMode ? "Switch to light theme" : "Switch to dark theme"}
     >
       {isDarkMode ? (
-        <Sun className="h-6 w-6 text-yellow-300" />
+        <Sun className="h-6 w-6 text-yellow-300 transform transition-transform duration-150 ease-in-out group-hover:scale-110 group-active:scale-95" />
       ) : (
-        <Moon className="h-6 w-6 text-gray-500" />
+        <Moon className="h-6 w-6 text-gray-500 transform transition-transform duration-150 ease-in-out group-hover:scale-110 group-active:scale-95" />
       )}
     </button>
   );
