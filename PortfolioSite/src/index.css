@@ -12,7 +12,7 @@
 
   --color-card: hsl(var(--card));
 
-  --animate-float: flot 6s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
   --animate-blink: blink 1.2s step-start infinite;
   --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
   --animate-fade-in: fade-in 0.7s ease-out forwards;
@@ -91,7 +91,7 @@
 
     --card: 0 0% 100%;
 
-    --primary: 250 47% 60%;
+    --primary: 200 80% 45%;
     --primary-foreground: 210 40% 98%;
 
     --border: 214 32% 91%;
@@ -103,7 +103,7 @@
 
     --card: 222 47% 8%;
 
-    --primary: 250 65% 65%;
+    --primary: 200 85% 50%;
     --primary-foreground: 213 31% 91%;
 
     --border: 217 33% 20%;
@@ -138,11 +138,11 @@
 
 @utility text-glow {
   @apply relative;
-  text-shadow: 0 0 10px rgba(167, 139, 250, 0.5);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
 }
 
 @utility card-hover {
-  @apply transition-transform duration-300 hover:scale-[1.03] hover:shadow-lg;
+  @apply transition-transform duration-300 hover:scale-[1.05] hover:shadow-lg;
 }
 
 @utility gradient-border {
@@ -153,7 +153,7 @@
 }
 
 @utility cosmic-button {
-  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-300 hover:shadow-[0_0_10px_rgba(139,92,246,0.5)] hover:scale-105 active:scale-95;
+  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-300 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] hover:scale-105 active:scale-95;
 }
 
 @utility star {
