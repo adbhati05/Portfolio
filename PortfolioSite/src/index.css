@@ -138,11 +138,11 @@
 
 @utility text-glow {
   @apply relative;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
 }
 
 @utility card-hover {
-  @apply transition-transform duration-300 hover:scale-[1.05] hover:shadow-lg;
+  @apply transition-transform duration-300 hover:scale-[1.05] hover:shadow-[0_0_20px_rgba(56,189,248,0.6)];
 }
 
 @utility gradient-border {
