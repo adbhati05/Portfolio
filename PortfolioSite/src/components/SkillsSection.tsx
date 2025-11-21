@@ -18,7 +18,6 @@ import sql from "../skills/sql.svg";
 import tailwind from "../skills/tailwind.svg";
 import ts from "../skills/ts.svg";
 import ultralytics from "../skills/ultralytics.svg";
-
 import aws_white from "../skills/aws_white.svg";
 import C_white from "../skills/C_white.svg";
 import Cpp_white from "../skills/C++_white.svg";
@@ -38,46 +37,134 @@ import tailwind_white from "../skills/tailwind_white.svg";
 import ts_white from "../skills/ts_white.svg";
 import ultralytics_white from "../skills/ultralytics_white.svg";
 
+// TO-DO: Consider adding animations for each skill moving into place when a category button is clicked (do this via keyframes/animation declarations in index.css).
 
 // This list contains various skills I have and my proficiency levels in them.
 const skills = [
   // Languages (frontend and backend).
-  { name: "HTML",category: "Language", svgPath: html, whitesvgPath: html_white },
-  { name: "CSS", category: "Language", svgPath: css, whitesvgPath: css_white },
-  { name: "TypeScript", category: "Language", svgPath: ts, whitesvgPath: ts_white },
-  { name: "Java", category: "Language", svgPath: java, whitesvgPath: java_white },
-  { name: "Python", category: "Language", svgPath: python, whitesvgPath: python_white },
-  { name: "C", category: "Language", svgPath: C, whitesvgPath: C_white },
-  { name: "C++", category: "Language", svgPath: Cpp, whitesvgPath: Cpp_white },
-  { name: "SQL", category: "Language", svgPath: sql, whitesvgPath: sql_white },
+  {
+    name: "HTML",
+    category: "Language",
+    svgPath: html,
+    whitesvgPath: html_white,
+  },
+  { name: "CSS", 
+    category: "Language", 
+    svgPath: css, 
+    whitesvgPath: css_white 
+  },
+  {
+    name: "TypeScript",
+    category: "Language",
+    svgPath: ts,
+    whitesvgPath: ts_white,
+  },
+  {
+    name: "Java",
+    category: "Language",
+    svgPath: java,
+    whitesvgPath: java_white,
+  },
+  {
+    name: "Python",
+    category: "Language",
+    svgPath: python,
+    whitesvgPath: python_white,
+  },
+  { 
+    name: "C", 
+    category: "Language", 
+    svgPath: C, 
+    whitesvgPath: C_white 
+  },
+  { 
+    name: "C++", 
+    category: "Language", 
+    svgPath: Cpp, 
+    whitesvgPath: Cpp_white 
+  },
+  { 
+    name: "SQL",
+    category: "Language", 
+    svgPath: sql, 
+    whitesvgPath: sql_white },
 
   // Frameworks/libraries (putting them all as frameworks for simplicity).
-  { name: "React", category: "Framework", svgPath: react, whitesvgPath: react_white },
-  { name: "Tailwind", category: "Framework", svgPath: tailwind, whitesvgPath: tailwind_white },
-  { name: "PyTorch", category: "Framework", svgPath: pytorch, whitesvgPath: pytorch_white },
-  { name: "YOLOv8", category: "Framework", svgPath: ultralytics, whitesvgPath: ultralytics_white },
+  {
+    name: "React",
+    category: "Framework",
+    svgPath: react,
+    whitesvgPath: react_white,
+  },
+  {
+    name: "Tailwind",
+    category: "Framework",
+    svgPath: tailwind,
+    whitesvgPath: tailwind_white,
+  },
+  {
+    name: "PyTorch",
+    category: "Framework",
+    svgPath: pytorch,
+    whitesvgPath: pytorch_white,
+  },
+  {
+    name: "YOLOv8",
+    category: "Framework",
+    svgPath: ultralytics,
+    whitesvgPath: ultralytics_white,
+  },
 
   // Databases/Tools (putting them all as tools for simplicity).
-  { name: "Firebase", category: "Tool", svgPath: firebase, whitesvgPath: firebase_white },
-  { name: "MongoDB", category: "Tool", svgPath: mongodb, whitesvgPath: mongodb_white },
-  { name: "AWS", category: "Tool", svgPath: aws, whitesvgPath: aws_white },
-  { name: "Git", category: "Tool", svgPath: git, whitesvgPath: git_white },
-  { name: "Docker", category: "Tool", svgPath: docker, whitesvgPath: docker_white },
-  { name: "OpenCV", category: "Tool", svgPath: opencv, whitesvgPath: opencv_white },
+  {
+    name: "Firebase",
+    category: "Tool",
+    svgPath: firebase,
+    whitesvgPath: firebase_white,
+  },
+  {
+    name: "MongoDB",
+    category: "Tool",
+    svgPath: mongodb,
+    whitesvgPath: mongodb_white,
+  },
+  { 
+    name: "AWS", 
+    category: "Tool", 
+    svgPath: aws, 
+    whitesvgPath: aws_white 
+  },
+  { 
+    name: "Git", 
+    category: "Tool", 
+    svgPath: git, 
+    whitesvgPath: git_white 
+  },
+  {
+    name: "Docker",
+    category: "Tool",
+    svgPath: docker,
+    whitesvgPath: docker_white,
+  },
+  {
+    name: "OpenCV",
+    category: "Tool",
+    svgPath: opencv,
+    whitesvgPath: opencv_white,
+  },
 ];
 
 const categories = ["All", "Language", "Framework", "Tool"];
 
 export const SkillsSection = () => {
-  // NOTE: CONSIDER ADDING ICONS FOR EACH SKILL LATER.
-  // NOTE: ALSO CONSIDER ADDING ANIMATIONS FOR THE SKILL BARS AND HOW THE SKILLS MOVE INTO PLACE WHEN A CATEGORY BUTTON IS CLICKED).
   // State variable to track the current skill category filter that user has selected.
   const [activeCategory, setActiveCategory] = useState("All");
 
   // Tracking if website is in dark mode or light mode by checking the document's class list for "dark" class and ensuring it's not undefined (to avoid issues during server-side rendering).
-  const [isDarkMode, setIsDarkMode] = useState(() => 
-    typeof document !== "undefined" &&
-    document.documentElement.classList.contains("dark")
+  const [isDarkMode, setIsDarkMode] = useState(
+    () =>
+      typeof document !== "undefined" &&
+      document.documentElement.classList.contains("dark")
   );
 
   // This useEffect hook sets up a MutationObserver to monitor changes to the document's class list. This is a similar approach to the one used in CosmicBackground.tsx to track theme changes.
@@ -86,14 +173,14 @@ export const SkillsSection = () => {
     const root = document.documentElement;
     const sync = () => {
       setIsDarkMode(root.classList.contains("dark"));
-    }
+    };
     sync();
 
     // Setting up a MutationObserver to track changes to the class attribute of the document's root element (if user changes themes) and calling sync() appropriately.
     // The theme is located in the root element's class list, it's either "dark" or null (light mode).
     const observer = new MutationObserver((mutations) => {
       for (const m of mutations) {
-        if (m.type === "attributes" && (m.attributeName === "class")) {
+        if (m.type === "attributes" && m.attributeName === "class") {
           sync();
           break;
         }
@@ -130,7 +217,6 @@ export const SkillsSection = () => {
 
     // Cleanup function to remove the event listener when component unmounts.
     return () => mediaQuery.removeEventListener("change", handler);
-
   }), [];
 
   // Filtering the skills based on the activeCategory state. If "All" is selected, all skills are shown, otherwise only skills matching the selected category are displayed.
@@ -139,11 +225,11 @@ export const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="relative z-20 py-24 px-25 bg-secondary/30">
+    <section id="skills" className="relative z-20 py-24 px-30 bg-secondary/30">
       <div className="container mx-auto max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           {" "}
-          Technical Skills
+          Technical <span className="text-primary"> Skills </span>
         </h2>
       </div>
 
@@ -180,7 +266,9 @@ export const SkillsSection = () => {
                 alt={skill.name}
                 className="w-12 h-12 mb-2"
               />
-              <h3 className="text-primary font-semibold font-lg">{skill.name}</h3>
+              <h3 className="text-primary font-semibold font-lg">
+                {skill.name}
+              </h3>
             </div>
           </div>
         ))}
