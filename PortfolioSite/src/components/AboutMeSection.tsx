@@ -68,13 +68,13 @@ export const AboutMeSection = () => {
             <img
               src={Headshot}
               alt="Headshot"
-              className="rounded-lg shadow-lg"
+              className="rounded-xl shadow-lg"
             />
           </div>
 
           {/* Description */}
           <div className="flex flex-col justify-center space-y-6">
-            <h3 className="text-3xl text-primary font-semibold">
+            <h3 className="relative z-20 text-3xl text-primary font-semibold">
               { text } <span className="animate-blink"> | </span>
             </h3>
             <p className="text-muted-foreground">
@@ -112,14 +112,14 @@ export const AboutMeSection = () => {
             </div>
 
             <div className="flex flex-row gap-4 pt-4 justify-center items-center">
-              <a href="#contact" className="cosmic-button">
+              <a href="#contact" className="cosmic-button text-md sm:text-lg">
                 {" "}
                 Get in Touch
               </a>
 
               <a
                 href={Resume}
-                className="px-7 py-2 rounded-full border border-primary text-primary hover:bg-primary/15 transition-colors duration-300"
+                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 text-md sm:text-lg"
               >
                 {" "}
                 My Resume

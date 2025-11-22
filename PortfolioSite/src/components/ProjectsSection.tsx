@@ -143,7 +143,7 @@ export const ProjectsSection = () => {
           {projects.map((project, key) => (
             <div
               key={key}
-              className="group bg-card rounded-lg overflow-hidden shadow-xs card-hover flex flex-col"
+              className="group bg-card rounded-xl overflow-hidden shadow-xs card-hover flex flex-col"
             >
               {/* Project image with hover effect for slight zoom-in. */}
               <div className="h-48 overflow-hidden">
@@ -186,7 +186,7 @@ export const ProjectsSection = () => {
                       href={project.githubURL}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-primary px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 group/link"
+                      className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 group/link"
                     >
                       <img
                         src={isDarkMode ? GitHubWhite : GitHub}

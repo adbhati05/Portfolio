@@ -225,11 +225,11 @@ export const SkillsSection = () => {
   );
 
   return (
-    <section id="skills" className="relative z-20 py-24 px-30 bg-secondary/30">
-      <div className="container mx-auto max-w-5xl">
+    <section id="skills" className="relative z-20 py-24 w-3/5 md:w-4/5 bg-secondary/30 mx-auto">
+      <div className="container mx-auto max-w-5xl justify-center items-center">
         <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
           {" "}
-          Technical <span className="text-primary"> Skills </span>
+          Technical <span className="text-primary text-center"> Skills </span>
         </h2>
       </div>
 
@@ -253,11 +253,11 @@ export const SkillsSection = () => {
       </div>
 
       {/* Mapping the skills array (as well as their keys) to individual skill cards. */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 justify-center items-center">
         {filteredSkills.map((skill) => (
           <div
             key={skill.name}
-            className="bg-card p-6 rounded-lg shadow-xs card-hover"
+            className="bg-card p-6 rounded-xl shadow-xs card-hover"
           >
             {/* Skill names and icons (both dark and light mode).  */}
             <div className="justify-center items-center flex flex-col">

@@ -13,6 +13,9 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 
+// TO-DO: Figure out how to solve issue where theme toggle state is not synced between desktop and mobile menu properly.
+// TO-DO: Figure out how to not have "Aditya Bhati's Portfolio" not take up two lines on medium-large widght screen sizes (768px to 1024px).
+
 export const NavBar = () => {
   // State variable to track if the user has scrolled down the page (used for styling the navbar on scroll).
   const [isScrolled, setIsScrolled] = useState(false);
@@ -80,10 +83,10 @@ export const NavBar = () => {
     >
       <div className="container flex items-center justify-between">
         <a
-          className="text-xl font-bold text-primary flex items-center"
+          className="text-lg md:text-xl font-bold text-primary flex items-center"
           href="#hero"
         >
-          <span className="relative z-10 transform transition-transform duration-150 ease-in-out hover:scale-105 active:scale-95">
+          <span className="relative z-20 transform transition-transform duration-150 ease-in-out hover:scale-105 active:scale-95">
             <span className="text-glow text-foreground"> Aditya Bhati's </span>{" "}
             Portfolio
           </span>
@@ -95,7 +98,7 @@ export const NavBar = () => {
             <a
               key={key}
               href={item.href}
-              className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+              className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
             >
               {item.name}
             </a>
@@ -138,7 +141,7 @@ export const NavBar = () => {
                 key={key}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-foreground/80 hover:text-primary transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+                className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
               >
                 {item.name}
               </a>
