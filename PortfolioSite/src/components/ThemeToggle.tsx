@@ -7,32 +7,48 @@ export const ThemeToggle = () => {
   const [isDarkMode, setToDarkMode] = useState(false);
 
   // This useEffect hook handles the logic for ensuring the user's chosen theme persists across sessions.
-  // It checks local storage for a stored theme preference when the component mounts and applies that theme accordingly.
+  // It also sets up an event listener for a custom "theme-change" event to sync the theme state across different components.
   useEffect(() => {
-    const storedTheme = localStorage.getItem("theme");
-    if (storedTheme === "dark") {
+    // Accessing the root HTML element and checking local storage for theme preference.
+    // If the stored theme is "dark" or if no theme is stored but the user's system preference is dark mode, apply dark mode.
+    const root = window.document.documentElement;
+    if (localStorage.getItem("theme") === "dark" || (!localStorage.getItem("theme") && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
+      root.classList.add("dark");
       setToDarkMode(true);
-      document.documentElement.classList.add("dark");
-    } else {
-      setToDarkMode(false);
-      document.documentElement.classList.remove("dark");
-    }
+    };
+
+    // This function checks the current theme and updates the isDarkMode state accordingly, it will be used to sync the theme across components.
+    const syncTheme = () => {
+      const isDark = root.classList.contains("dark");
+      setToDarkMode(isDark);
+    };
+
+    // Creating a custom "theme-change" event listener by leveraging syncTheme above (also ensuring clean up is performed below).
+    window.addEventListener("theme-change", syncTheme);
+
+    return () => {
+      window.removeEventListener("theme-change", syncTheme);
+    };
   }, []);
 
   // Declaring the function that'll be used to toggle the theme, main condition being if site is currently in dark mode or not.
   const toggleTheme = () => {
+    const root = window.document.documentElement;
+
     if (isDarkMode) {
       // Removing the "dark" class from the root to ensure the site renders in light mode.
       // Storing the user's theme preference in local storage to ensure it persists across sessions (theme doesn't change when page is re-rendered).
-      document.documentElement.classList.remove("dark");
+      root.classList.remove("dark");
       localStorage.setItem("theme", "light");
       setToDarkMode(false);
     } else {
       // Adding the "dark" class to the root to ensure the site renders in dark mode.
-      document.documentElement.classList.add("dark");
+      root.classList.add("dark");
       localStorage.setItem("theme", "dark");
       setToDarkMode(true);
     }
+
+    window.dispatchEvent(new Event("theme-change"));
   };
 
   return (

@@ -1,7 +1,6 @@
 import OSU from "../assets/OSU.png";
 import { GraduationCap } from "lucide-react";
 
-// TO-DO: Add courses taken. For each course specify if it's completed or in-progress (green for completed, yellow for in-progress).
 // TO-DO: Style university card better (specifically TOSU text and specialization text).
 
 // Array of course objects containing details about each course taken.

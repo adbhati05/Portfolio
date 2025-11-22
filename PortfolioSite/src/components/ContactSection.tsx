@@ -1,6 +1,7 @@
 import { Mail } from "lucide-react";
 import { FaLinkedin } from "react-icons/fa";
 
+// TO-DO: Consider adding a contact form that sends emails via a service like EmailJS or Formspree.
 
 export const ContactSection = () => {
   return (

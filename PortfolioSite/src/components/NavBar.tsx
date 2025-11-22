@@ -13,7 +13,6 @@ const navItems = [
   { name: "Contact", href: "#contact" },
 ];
 
-// TO-DO: Figure out how to solve issue where theme toggle state is not synced between desktop and mobile menu properly.
 // TO-DO: Figure out how to not have "Aditya Bhati's Portfolio" not take up two lines on medium-large widght screen sizes (768px to 1024px).
 
 export const NavBar = () => {
@@ -66,13 +65,6 @@ export const NavBar = () => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
-  useEffect(() => {
-    if (!isMenuOpen) return;
-
-    // When menu opens, refresh theme state in children
-    window.dispatchEvent(new Event("storage"));
-  }, [isMenuOpen]);
 
   return (
     <nav
