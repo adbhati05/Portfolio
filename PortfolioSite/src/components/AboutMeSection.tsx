@@ -1,4 +1,4 @@
-import Headshot from "../assets/headshot.jpg";
+import Headshot from "../assets/Headshot.jpg";
 import Resume from "../assets/Resume - Aditya Bhati.pdf";
 import { useState, useEffect} from "react";
 
