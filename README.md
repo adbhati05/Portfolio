@@ -1,73 +1,19 @@
-# React + TypeScript + Vite
+Portfolio Website for Aditya Bhati
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This website was developed using React, Typescript, and Tailwind CSS. 
 
-Currently, two official plugins are available:
+The packages I installed for this project were Vite, React, Tailwind, React-Router-Dom, Radix UI, Lucide-React, React-Icons, and EmailJS. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+It contains the following sections:
+- Home (a short introduction).
+- About Me (goes into more detail about me, includes paths to my resume and contact info).
+- Skills (an interactive grid of elements containing the skills I've worked with).
+- Projects (project cards containing info about projects I've worked on that contain links to their respective gihub repo URLs).
+- Education (an outline of what university I attend, what major/GPA, and the courses I've taken that are relevant to my field.)
+- Contact (contains paths to email me or visit my LinkedIn profile).
 
-## React Compiler
-
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Future developments will consist of:
+- Adding additional skills and projects as I work on more of them in the future. 
+- A new section listing out any experiences I have research-wise or in the industry.
+- A custom Error 404 - not found page styled to the theme of the site.
+- An option for site users to type out their message in a form submission in case they want to contact me.
