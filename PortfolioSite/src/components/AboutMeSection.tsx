@@ -96,13 +96,13 @@ export const AboutMeSection = () => {
                 </span>
               </div>
               <div className="flex flex-col items-center text-center">
-                <label className="text-primary font-semibold text-2xl">5</label>
+                <label className="text-primary font-bold text-2xl">5</label>
                 <span className="text-muted-foreground text-md mt-1">
                   Major Projects
                 </span>
               </div>
               <div className="flex flex-col items-center text-center">
-                <label className="text-primary font-semibold text-2xl">
+                <label className="text-primary font-bold text-2xl">
                   1x
                 </label>
                 <span className="text-muted-foreground text-md mt-1">
@@ -112,14 +112,14 @@ export const AboutMeSection = () => {
             </div>
 
             <div className="flex flex-row gap-4 pt-4 justify-center items-center">
-              <a href="#contact" className="cosmic-button text-md sm:text-lg">
+              <a href="#contact" className="cosmic-button font-semibold text-md sm:text-lg">
                 {" "}
                 Get in Touch
               </a>
 
               <a
                 href={Resume}
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 text-md sm:text-lg"
+                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 font-semibold text-md sm:text-lg"
               >
                 {" "}
                 My Resume
