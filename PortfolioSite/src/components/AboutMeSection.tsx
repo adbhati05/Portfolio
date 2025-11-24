@@ -74,7 +74,7 @@ export const AboutMeSection = () => {
 
           {/* Description */}
           <div className="flex flex-col justify-center space-y-6">
-            <h3 className="relative z-20 text-3xl text-primary font-semibold">
+            <h3 className="relative z-20 text-3xl text-primary font-bold">
               { text } <span className="animate-blink"> | </span>
             </h3>
             <p className="text-muted-foreground">
