@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/react";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -7,6 +8,8 @@ import "./index.css";
 function App() {
   return (
     <>
+      {/* Mounting the Vercel analytics component to get visits/views data. */}
+      <Analytics />
       {/* React router dom ensures user is navigated to the appropriate page when interacting with the site. */}
       <BrowserRouter>
         <Routes>
