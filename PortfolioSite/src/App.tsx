@@ -1,4 +1,5 @@
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { BrowserRouter, Routes, Route} from "react-router-dom";
 import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
@@ -10,6 +11,10 @@ function App() {
     <>
       {/* Mounting the Vercel analytics component to get visits/views data. */}
       <Analytics />
+
+      {/* Mounting the Vercel speed insights component to get performance data. */}
+      <SpeedInsights />
+      
       {/* React router dom ensures user is navigated to the appropriate page when interacting with the site. */}
       <BrowserRouter>
         <Routes>
