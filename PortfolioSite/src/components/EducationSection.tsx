@@ -66,7 +66,7 @@ const course = [
     status: "In-Progress",
   },
   {
-    name: "CSE 3244 - Data Management in the Cloud",
+    name: "CSE 3244 - Cloud Data Management",
     topic: "Data Engineering",
     status: "In-Progress",
   },
