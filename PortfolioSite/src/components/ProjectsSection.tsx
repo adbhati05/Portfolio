@@ -59,7 +59,7 @@ const projects = [
     details: "",
     image: DamageDetection,
     tags: ["Python", "PyTorch", "NumPy", "YOLOv8", "Docker", "CVAT"],
-    githubURL: "",
+    githubURL: "https://github.com/adbhati05/AI-Experiments/tree/main/DamageDetector",
   },
 ];
 
