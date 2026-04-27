@@ -6,6 +6,7 @@ import SpotifyLogo from "../projects/Spotify Logo.webp";
 import MarketPrediction from "../projects/Market Prediction.jpg";
 import FitLog from "../projects/FitLog.jpg";
 import DamageDetection from "../projects/Damage Detection.webp";
+import Gallery from "../projects/Gallery.jpg";
 
 // TO-DO: Add details for each project later, don't make them exposed fully upon loading the page, have a "READ MORE" button or something similar. You can deploy the site for now, and come back to this when you have an idea of how to go into more detail for each project.
 
@@ -61,6 +62,15 @@ const projects = [
     tags: ["Python", "PyTorch", "NumPy", "YOLOv8", "Docker", "CVAT"],
     githubURL: "https://github.com/adbhati05/AI-Experiments/tree/main/DamageDetector",
   },
+  {
+    id: 6,
+    name: "Igneous Rock Gallery",
+    description: "Front-end web application that displays images of igneous rocks alongside facts about them. This was a side quest for my geology course!",
+    details: "",
+    image: Gallery,
+    tags: ["Next.js", "Tailwind", "TypeScript", "React"],
+    githubURL: "https://github.com/adbhati05/Web-Apps/tree/main/igneous-rocks"
+  }
 ];
 
 export const ProjectsSection = () => {
