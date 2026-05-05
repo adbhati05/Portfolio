@@ -38,6 +38,7 @@ const HeroSection = () => {
             </a>
           </div>
 
+          {/* TODO: Figure out how to have this stay in place while scrolling down to next section (even when the screen's vertically compressed). */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
             <span className="text-sm text-muted-foreground mb-2">Scroll Down</span>
             <ArrowDown className="h-5 w-5 text-primary" />
