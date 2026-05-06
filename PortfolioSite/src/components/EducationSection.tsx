@@ -63,18 +63,33 @@ const course = [
   {
     name: "CSE 3231 - SWE Techniques",
     topic: "Software Industry Practices",
-    status: "In-Progress",
+    status: "Completed",
   },
   {
     name: "CSE 3244 - Cloud Data Management",
     topic: "Data Engineering",
-    status: "In-Progress",
+    status: "Completed",
   },
   {
     name: "CSE 5523 - Machine Learning",
     topic: "ML Concepts",
-    status: "In-Progress",
+    status: "Completed",
   },
+  {
+    name: "CSE 5524 - Computer Vision",
+    topic: "CV & CNN Concepts",
+    status: "Enrolled",
+  },
+  {
+    name: "CSE 5525 - Speech & Lang Proc",
+    topic: "NLP Concepts",
+    status: "Enrolled",
+  },
+  {
+    name: "CSE 5914 - AI Capstone",
+    topic: "Knowledge Systems",
+    status: "Enrolled",
+  }
 ];
 
 export const EducationSection = () => {
@@ -123,7 +138,7 @@ export const EducationSection = () => {
             </div>
 
             <p className="rounded-md bg-primary/20 px-4 py-2 border border-primary text-primary whitespace-nowrap">
-              GPA: 3.34
+              GPA: 3.43
             </p>
           </div>
         </div>
