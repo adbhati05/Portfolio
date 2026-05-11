@@ -2,6 +2,7 @@ import CosmicBackground from "../components/CosmicBackground";
 import NavBar from "../components/NavBar";
 import HeroSection from "../components/HeroSection";
 import AboutMeSection from "../components/AboutMeSection";
+import ExperienceSection from "../components/ExperienceSection";
 import SkillsSection from "../components/SkillsSection";
 import ProjectsSection from "../components/ProjectsSection";
 import EducationSection from "../components/EducationSection";
@@ -21,6 +22,7 @@ export const Home = () => {
       <main>
         <HeroSection />
         <AboutMeSection />
+        <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
         <EducationSection />

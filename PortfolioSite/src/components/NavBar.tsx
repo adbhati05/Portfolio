@@ -7,6 +7,7 @@ import { ThemeToggle } from "./ThemeToggle";
 const navItems = [
   { name: "Home", href: "#hero" },
   { name: "About", href: "#about" },
+  { name: "Experience", href: "#experience" },
   { name: "Skills", href: "#skills" },
   { name: "Projects", href: "#projects" },
   { name: "Education", href: "#education" },
@@ -78,19 +79,19 @@ export const NavBar = () => {
           className="text-lg md:text-xl font-bold text-primary flex items-center"
           href="#hero"
         >
-          <span className="relative z-20 transform transition-transform duration-150 ease-in-out hover:scale-105 active:scale-95">
+          <span className="relative z-20 transform transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97">
             <span className="text-glow text-foreground"> Aditya Bhati's </span>{" "}
             Portfolio
           </span>
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center space-x-8">
+        <div className="hidden lg:flex items-center space-x-8">
           {navItems.map((item, key) => (
             <a
               key={key}
               href={item.href}
-              className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+              className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
             >
               {item.name}
             </a>
@@ -101,17 +102,17 @@ export const NavBar = () => {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="md:hidden p-2 text-foreground z-[1000]"
+          className="lg:hidden p-2 text-foreground z-[1000]"
         >
           {isMenuOpen ? (
             <X
               size={24}
-              className="transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+              className="transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
             />
           ) : (
             <Menu
               size={24}
-              className="transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+              className="transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
             />
           )}
         </button>
@@ -121,7 +122,7 @@ export const NavBar = () => {
         <div
           className={cn(
             "fixed top-0 left-0 w-full h-screen bg-background z-[999] flex flex-col items-center justify-center",
-            "transition-all duration-300 md:hidden",
+            "transition-all duration-300 lg:hidden",
             isMenuOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -133,7 +134,7 @@ export const NavBar = () => {
                 key={key}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-150 ease-in-out hover:scale-110 active:scale-95"
+                className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
               >
                 {item.name}
               </a>

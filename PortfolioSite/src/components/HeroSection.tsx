@@ -8,7 +8,7 @@ const HeroSection = () => {
     // It also has an id of "hero" to allow for easy navigation from other parts of the site.
     <section
       id="hero"
-      className="relative min-h-screen flex flex-col items-center justify-center px-4"
+      className="relative min-h-screen flex flex-col items-center justify-center py-24 px-4"
     >
       <div className="container max-w-4xl mx-auto text-center z-10">
         <div className="space-y-6">
@@ -32,15 +32,17 @@ const HeroSection = () => {
             applications.
           </p>
 
-          <div className="pt-4 opacity-0 animate-fade-in-delay-4 transform transition-transform duration-150 ease-in-out hover:scale-105 active:scale-95">
-            <a href="#projects" className="cosmic-button">
+          <div className="flex flex-row gap-4 pt-4 justify-center items-center">
+            <a href="#projects" className="cosmic-button text-md">
               View My Work
             </a>
           </div>
 
           {/* TODO: Figure out how to have this stay in place while scrolling down to next section (even when the screen's vertically compressed). */}
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-bounce">
-            <span className="text-sm text-muted-foreground mb-2">Scroll Down</span>
+            <span className="text-sm text-muted-foreground mb-2">
+              Scroll Down
+            </span>
             <ArrowDown className="h-5 w-5 text-primary" />
           </div>
         </div>

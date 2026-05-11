@@ -241,7 +241,7 @@ export const SkillsSection = () => {
             key={key}
             onClick={() => setActiveCategory(category)}
             className={cn(
-              "cosmic-button font-normal",
+              "cosmic-button text-md",
               activeCategory === category
                 ? "bg-primary text-primary-foreground"
                 : "bg-foreground/5 text-foreground hover:bg-foreground/10"
