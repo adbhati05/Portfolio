@@ -110,7 +110,7 @@ export const EducationSection = () => {
           <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mb-4">
             <div className="flex flex-row gap-3 justify-start items-center">
               <GraduationCap className="w-8 h-8 flex-shrink-0 text-primary" />
-            <p className="text-xl lg:text-2xl text-primary font-semibold">
+            <p className="text-left text-xl lg:text-2xl text-primary font-semibold">
               {" "}
               Bachelor of Science - Computer Science & Engineering{" "}
             </p>
@@ -134,11 +134,11 @@ export const EducationSection = () => {
               </div>
               <div className="flex flex-col justify-start items-start">
                 {" "}
-                <p className="text-md sm:text-2xl font-semibold mb-2">
+                <p className="text-left text-md sm:text-2xl font-semibold mb-2">
                   {" "}
                   The Ohio State University{" "}
                 </p>
-                <p className="text-sm lg:text-md font-semibold text-primary">
+                <p className="text-left text-sm lg:text-md font-semibold text-primary">
                   Specialization: Artificial Intelligence
                 </p>
               </div>

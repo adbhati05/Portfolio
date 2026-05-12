@@ -5,7 +5,7 @@ const experiences = [
   {
     company: "Able Applied Technologies",
     role: "Software Engineer Intern",
-    duration: "May 2026 - August 2026",
+    duration: "Jun 2026 - Aug 2026",
     description: "Incoming Summer 2026",
     image: AbleAT,
   },
@@ -38,13 +38,13 @@ const ExperienceSection = () => {
                   className="w-32 h-32 object-cover rounded-md border border-primary"
                 />
                 <div className="flex flex-col justify-center items-start">
-                  <p className="text-md lg:text-xl font-semibold mb-2">
+                  <p className="text-left text-md lg:text-xl font-semibold mb-2">
                     {experience.company}
                   </p>
-                  <p className="text-sm lg:text-md font-semibold text-primary mb-4">
+                  <p className="text-left text-sm lg:text-md font-semibold text-primary mb-4">
                     {experience.role}
                   </p>
-                  <p className="text-muted-foreground text-left">
+                  <p className="text-left text-muted-foreground">
                     {experience.description}
                   </p>
                 </div>
