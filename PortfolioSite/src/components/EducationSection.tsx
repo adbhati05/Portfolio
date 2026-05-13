@@ -107,7 +107,7 @@ export const EducationSection = () => {
       <div className="w-full">
         {/* University card with degree, specialization, expected graduation date, and GPA. */}
         <div className="bg-card py-10 px-6 rounded-xl card-hover shadow-xs w-full">
-          <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
+          <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mb-4">
             <div className="flex flex-row gap-3 justify-start items-center">
               <GraduationCap className="w-8 h-8 flex-shrink-0 text-primary" />
               <p className="text-left text-xl lg:text-2xl text-primary font-semibold">
