@@ -107,19 +107,19 @@ export const EducationSection = () => {
       <div className="w-full">
         {/* University card with degree, specialization, expected graduation date, and GPA. */}
         <div className="bg-card py-10 px-6 rounded-xl card-hover shadow-xs w-full">
-          <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mb-4">
+          <div className="flex flex-col lg:flex-row gap-4 justify-between items-center">
             <div className="flex flex-row gap-3 justify-start items-center">
               <GraduationCap className="w-8 h-8 flex-shrink-0 text-primary" />
-            <p className="text-left text-xl lg:text-2xl text-primary font-semibold">
-              {" "}
-              Bachelor of Science - Computer Science & Engineering{" "}
-            </p>
+              <p className="text-left text-xl lg:text-2xl text-primary font-semibold">
+                {" "}
+                Bachelor of Science - Computer Science & Engineering{" "}
+              </p>
             </div>
 
             <div className="flex flex-row gap-3 justify-start items-center">
-               <p className="ml-4 px-6 py-2 rounded-full border border-primary text-primary bg-primary/20">
-              Expected Dec 2026
-            </p>
+              <p className="ml-4 px-6 py-2 rounded-full border border-primary text-primary bg-primary/20">
+                Expected Dec 2026
+              </p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
@@ -169,13 +169,12 @@ export const EducationSection = () => {
 
                 {/* Status badge with color coding depending of if the course is completed, in progress, or enrolled. */}
                 <span
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${
-                    course.status === "Completed"
-                      ? "bg-green-500/20 text-green-500"
-                      : course.status === "In-Progress"
+                  className={`px-4 py-2 rounded-full text-sm font-medium ${course.status === "Completed"
+                    ? "bg-green-500/20 text-green-500"
+                    : course.status === "In-Progress"
                       ? "bg-yellow-500/20 text-yellow-500"
                       : "bg-purple-500/20 text-purple-500"
-                  }`}
+                    }`}
                 >
                   {course.status}
                 </span>

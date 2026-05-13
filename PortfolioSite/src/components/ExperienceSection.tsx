@@ -29,7 +29,7 @@ const ExperienceSection = () => {
           {experiences.map((experience, key) => (
             <div
               key={key}
-              className="flex flex-col md:flex-row gap-4 justify-between items-center mb-4"
+              className="flex flex-col md:flex-row gap-4 justify-between items-center"
             >
               <div className="flex flex-row gap-6 justify-start items-center">
                 <img
