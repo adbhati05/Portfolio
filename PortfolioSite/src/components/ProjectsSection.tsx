@@ -140,13 +140,6 @@ export const ProjectsSection = () => {
           Featured <span className="text-primary"> Projects </span>
         </h2>
 
-        {/* Brief description of what to expect in this section. */}
-        <p className="text-center text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
-          A selection of my personal projects spanning deep learning, full-stack
-          web applications, and robotics. Each project highlights my passion for
-          technology and problem-solving.
-        </p>
-
         {/* Grid layout for project cards, responsive to different screen sizes. */}
         {/* Mapping through the projects array to create individual project cards. */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
