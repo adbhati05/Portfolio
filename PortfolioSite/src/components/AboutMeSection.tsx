@@ -83,7 +83,7 @@ export const AboutMeSection = () => {
               skills and knowledge to innovative projects and teams.
             </p>
             <p className="text-muted-foreground">
-              I am currently seeking Summer and Autumn 2026 internships/co-ops
+              I am currently seeking full-time opportunities
               to gain more hands-on experience and grow professionally.
             </p>
 
