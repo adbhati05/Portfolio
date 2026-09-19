@@ -28,7 +28,7 @@ const HeroSection = () => {
             A passionate Computer Science & Engineering student at The Ohio
             State University with a strong interest in ML and full-stack
             development. I enjoy applying what I learn to construct scalable,
-            impactful solutions— from object detection models to dynamic web
+            impactful solutions; from object detection models to dynamic web
             applications.
           </p>
 
