@@ -1,130 +1,78 @@
 import Headshot from "../assets/Headshot.jpg";
 import Resume from "../assets/Resume - Aditya Bhati.pdf";
-import { useState, useEffect} from "react";
+import { ArrowUpRight, FileText } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+import CountUp from "./CountUp";
+import ImageReveal from "./ImageReveal";
 
-export const AboutMeSection = () => {
-  // Setting up state variable for typing animation text.
-  const [text, setText] = useState("");
+// Stats shown under the description. Each number counts up from 0 once scrolled into view.
+const stats = [
+  { value: 14, suffix: "", label: "Courses Completed" },
+  { value: 5, suffix: "", label: "Major Projects" },
+  { value: 1, suffix: "x", label: "Hackathon Finalist" },
+];
 
-  // State variables to maintain current position in the text. Initialized to 0 (index of first text in textOptions).
-  const [textIndex, setTextIndex] = useState(0);
-
-  // State variable to track if currently deleting text.
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  // Creating a list of text options for the typing animation.
-  const textOptions = [
-    "Full-Stack Developer",
-    "ML Engineer",
-    "Passionate CSE Student"
-  ];
-  
-  // useEffect hook to handle typing and deleting effect.
-  useEffect(() => {
-    // Getting the current text to type/delete based on textIndex.
-    const currentText = textOptions[textIndex];
-    
-    
-    const typingEffect = setTimeout(() => {
-      // If not currently deleting, type out the text.
-      if (!isDeleting) {
-        // Ensuring that the text we're typing is less than the full currentText.
-        // If so, leverage setText and substring to add one character at a time.
-        if (text.length < currentText.length) {
-          setText(currentText.substring(0, text.length + 1));
-        } else {
-          // Finished typing, wait for 2 seconds and change set deleting state to true to begin deletion process.
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
-      } else {
-        // Ensuring that deletion will continue if there's text to delete.
-        // Similar to typing, but now we remove one character at a time.
-        if (text.length > 0) {
-          setText(currentText.substring(0, text.length - 1));
-        } else {
-          // Finished deleting, set deleting state to false.
-          setIsDeleting(false);
-
-          // Update textIndex to point to the next text option in a cyclic manner via modulo.
-          setTextIndex((prevIndex) => (prevIndex + 1) % textOptions.length);
-        }
-      }
-    }, isDeleting ? 50 : 100); // Ensuring deletion is faster than typing.
-
-    // Cleanup function to clear timeout on component unmount.
-    return () => clearTimeout(typingEffect);
-  }, [text, isDeleting, textIndex]);
-
+const AboutMeSection = () => {
   return (
     // GET A PROFESSIONAL HEADSHOT ASAP
-    <section id="about" className="py-24 px-4 relative">
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          About <span className="text-primary"> Me</span>
-        </h2>
-        {/* Headshot */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <div className="flex items-center justify-center">
-            <img
+    <section id="about" className="relative z-20 px-4 py-24 md:py-32">
+      <div className="container max-w-5xl">
+        <SectionHeading title="About" highlight="Me" />
+
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2 md:gap-16">
+          {/* Headshot: wipes into view, greyscale to fit the monochrome theme and fading to color on hover. */}
+          <div className="group flex justify-center">
+            <ImageReveal
               src={Headshot}
               alt="Headshot"
-              className="rounded-xl shadow-lg"
+              className="w-full max-w-sm rounded-3xl border border-border"
             />
           </div>
 
           {/* Description */}
-          <div className="flex flex-col justify-center space-y-6">
-            <h3 className="relative z-20 text-3xl text-primary font-bold">
-              { text } <span className="animate-blink"> | </span>
-            </h3>
-            <p className="text-muted-foreground">
-              With over 2 years of experience in web development and roughly 1
-              year of experience in deep learning, I am eager to contribute my
-              skills and knowledge to innovative projects and teams.
-            </p>
-            <p className="text-muted-foreground">
-              I am currently seeking full-time opportunities
-              to gain more hands-on experience and grow professionally.
-            </p>
+          <div className="flex flex-col justify-center gap-6 text-left">
+            <Reveal delay={0.16} className="space-y-4 leading-relaxed text-muted-foreground">
+              <p>
+                With over 2 years of experience in web development and roughly 1
+                year of experience in deep learning, I am eager to contribute my
+                skills and knowledge to innovative projects and teams.
+              </p>
+              <p>
+                I am currently seeking full-time opportunities
+                to gain more hands-on experience and grow professionally.
+              </p>
+            </Reveal>
 
             {/* Stats */}
-            <div className="flex flex-row justify-between gap-4 mt-6">
-              <div className="flex flex-col items-center text-center">
-                <label className="text-primary font-bold text-2xl">11</label>
-                <span className="text-muted-foreground text-md mt-1">
-                  Courses Completed
-                </span>
+            <Reveal delay={0.24}>
+              <div className="grid grid-cols-3 divide-x divide-border rounded-2xl border border-border bg-card/60">
+                {stats.map((stat) => (
+                  <div key={stat.label} className="flex flex-col items-center gap-1 px-2 py-4 text-center">
+                    <CountUp
+                      value={stat.value}
+                      suffix={stat.suffix}
+                      className="text-3xl font-semibold tracking-tight"
+                    />
+                    <span className="text-xs text-muted-foreground sm:text-sm">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-col items-center text-center">
-                <label className="text-primary font-bold text-2xl">5</label>
-                <span className="text-muted-foreground text-md mt-1">
-                  Major Projects
-                </span>
-              </div>
-              <div className="flex flex-col items-center text-center">
-                <label className="text-primary font-bold text-2xl">
-                  1x
-                </label>
-                <span className="text-muted-foreground text-md mt-1">
-                  Hackathon Finalist
-                </span>
-              </div>
-            </div>
+            </Reveal>
 
-            <div className="flex flex-row gap-4 pt-4 justify-center items-center">
-              <a href="#contact" className="cosmic-button text-md">
-                {" "}
+            <Reveal delay={0.32} className="flex flex-wrap gap-3 pt-2">
+              <a href="#contact" className="mono-button group">
                 Get in Touch
+                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
               </a>
 
-              <a
-                href={Resume}
-                className="px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 text-md"
-              >
-                {" "}
+              <a href={Resume} className="mono-button-outline" target="_blank" rel="noopener noreferrer">
+                <FileText className="size-4" />
                 My Resume
               </a>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

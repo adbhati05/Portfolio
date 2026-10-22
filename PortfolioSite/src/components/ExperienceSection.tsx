@@ -1,63 +1,80 @@
 import AbleAT from "../experience/AbleAT.jpeg";
+import { CalendarDays } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
 
 // This list contains my work experiences and details about them (company, role, duration, description, and an image representing the company).
+// Descriptions are written as "- point one - point two", and each "- " starts a new bullet point on the card.
 const experiences = [
   {
     company: "Able Applied Technologies",
     role: "Software Engineer Intern",
     duration: "Jun 2026 - Aug 2026",
-    description: "Incoming Summer 2026",
+    description: "- Architected on-demand data pipelines and an internal web portal to generate real-time company performance reports. - Programmed long term stress testing LCD hardware telemetry collection, visualization, and analysis.",
     image: AbleAT,
   },
 ];
 
+// Splitting a description into bullet points on every " - " (a description without dashes stays as a single point).
+const toBullets = (description: string) =>
+  description
+    .split(/(?:^|\s)-\s/)
+    .map((point) => point.trim())
+    .filter(Boolean);
+
 const ExperienceSection = () => {
   return (
-    <section
-      id="experience"
-      className="relative z-20 py-24 w-4/5 lg:w-2/3 mx-auto"
-    >
-      <div className="container mx-auto max-w-5xl justify-center items-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          Work <span className="text-primary"> Experience </span>
-        </h2>
-      </div>
+    <section id="experience" className="relative z-20 px-4 py-24 md:py-32">
+      <div className="container max-w-4xl">
+        <SectionHeading title="Work" highlight="Experience" />
 
-      {/* Mapping the experiences array (as well as their keys) to individual experience cards. Each card displays the company logo, name, role, duration, and a brief description of the experience. */}
-      <div className="w-full">
-        <div className="bg-card py-10 px-6 rounded-xl shadow-xs card-hover w-full">
+        {/* Mapping the experiences array to a vertical timeline. Each entry has a dot on the line and a card with the company logo, name, role, duration, and the description as bullet points. */}
+        <ol className="relative space-y-8 border-l border-border pl-6 sm:pl-10">
           {experiences.map((experience, key) => (
-            <div
-              key={key}
-              className="flex flex-col md:flex-row gap-4 justify-between items-center"
-            >
-              <div className="flex flex-row gap-6 justify-start items-center">
-                <img
-                  src={experience.image}
-                  alt={experience.company}
-                  className="w-32 h-32 object-cover rounded-md border border-primary"
-                />
-                <div className="flex flex-col justify-center items-start">
-                  <p className="text-left text-md lg:text-xl font-semibold mb-2">
-                    {experience.company}
-                  </p>
-                  <p className="text-left text-sm lg:text-md font-semibold text-primary mb-4">
-                    {experience.role}
-                  </p>
-                  <p className="text-left text-muted-foreground">
-                    {experience.description}
-                  </p>
-                </div>
-              </div>
+            <li key={key} className="relative">
+              {/* Timeline dot */}
+              <span className="absolute -left-[31px] top-8 grid size-3 place-items-center rounded-full bg-foreground ring-4 ring-background sm:-left-[47px]" />
 
-              <div className="flex flex-row gap-3 justify-start items-center">
-                <p className="rounded-full bg-primary/20 px-4 py-2 border border-primary text-primary whitespace-nowrap">
-                  {experience.duration}
-                </p>
-              </div>
-            </div>
+              <Reveal delay={key * 0.08}>
+                <article className="card card-hover group p-6 text-left sm:p-8">
+                  <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
+                    <img
+                      src={experience.image}
+                      alt={experience.company}
+                      className="size-16 shrink-0 rounded-xl border border-border object-cover grayscale transition-all duration-500 group-hover:grayscale-0 sm:size-20"
+                    />
+
+                    <div className="flex-1">
+                      <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                        <div>
+                          <h3 className="text-lg font-semibold md:text-xl">
+                            {experience.company}
+                          </h3>
+                          <p className="text-sm text-muted-foreground md:text-base">
+                            {experience.role}
+                          </p>
+                        </div>
+                        <span className="chip w-fit">
+                          <CalendarDays className="size-3.5" />
+                          {experience.duration}
+                        </span>
+                      </div>
+
+                      <ul className="mt-5 space-y-2.5 text-sm leading-relaxed text-muted-foreground md:text-base">
+                        {toBullets(experience.description).map((point) => (
+                          <li key={point} className="flex gap-3">
+                            <span className="mt-2.5 h-px w-3 shrink-0 bg-foreground/50" />
+                            <span>{point}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </article>
+              </Reveal>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

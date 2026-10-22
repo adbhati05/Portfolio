@@ -1,8 +1,14 @@
 @import 'tailwindcss';
 
+/* Making Tailwind's "dark:" variant follow the "dark" class on <html> (set by ThemeToggle) instead of the OS setting. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Defining the base styles via CSS variables. The colors for different elements of the site are in hsl() format. */
 /* Also defining the variables that will be used for the keyframes defined below. */
 @theme {
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+
   --color-border: hsl(var(--border));
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -12,101 +18,94 @@
 
   --color-card: hsl(var(--card));
 
-  --animate-float: float 6s ease-in-out infinite;
-  --animate-blink: blink 1.2s step-start infinite;
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
   --animate-pulse-subtle: pulse-subtle 4s ease-in-out infinite;
-  --animate-fade-in: fade-in 0.7s ease-out forwards;
-  --animate-fade-in-delay-1: fade-in 0.7s ease-out 0.2s forwards;
-  --animate-fade-in-delay-2: fade-in 0.7s ease-out 0.4s forwards;
-  --animate-fade-in-delay-3: fade-in 0.7s ease-out 0.6s forwards;
-  --animate-fade-in-delay-4: fade-in 0.7s ease-out 0.8s forwards;
   --animate-meteor: meteor 5s linear infinite;
+  --animate-scroll-dot: scroll-dot 1.8s ease-in-out infinite;
 
   /* These keyframes are responsible for defining the animations' behaviors. */
   /* Feel free to adjust the values to tweak the animations as desired. */
-  @keyframes float {
-    0%, 100% { 
-      transform: translateY(0); 
-    } 
-    
-    50% {
-      transform: translateY(-10px); 
-    }
-  }
-
-  @keyframes blink {
-    0%, 50% {
-      opacity: 1; 
-    }
-
-    51%, 100% {
-      opacity: 0; 
-    }
-  }
-
   @keyframes pulse-subtle {
     0%, 100% {
-      opacity: 1; 
+      opacity: 1;
     }
 
     50% {
-      opacity: 0.7; 
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0; 
-      transform: translateY(20px); 
-    }
-
-    to { 
-      opacity: 1; 
-      transform: translateY(0); 
+      opacity: 0.4;
     }
   }
 
   @keyframes meteor {
     0% {
-      transform: rotate(210deg) translateX(0); 
-      opacity: 1; 
-    } 
-    
+      transform: rotate(210deg) translateX(0);
+      opacity: 1;
+    }
+
     70% {
       opacity: 1;
-    } 
-    
+    }
+
     100% {
       transform: rotate(210deg) translateX(-500px);
+      opacity: 0;
+    }
+  }
+
+  /* The little dot inside the "Scroll Down" mouse indicator in the hero section. */
+  @keyframes scroll-dot {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
+    }
+
+    30% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(10px);
       opacity: 0;
     }
   }
 }
 
 /* This layer contains all the base styles for the site (root represents light mode while dark obviously represents dark mode). */
+/* Everything is monochrome: only neutral greys, no hue or saturation. */
 @layer base {
   :root {
-    --background: 210 40% 98%;
-    --foreground: 222 47% 11%;
+    --background: 0 0% 98%;
+    --foreground: 0 0% 4%;
 
     --card: 0 0% 100%;
 
-    --primary: 200 80% 45%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
 
-    --border: 214 32% 91%;
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
+
+    --border: 0 0% 88%;
+
+    color-scheme: light;
   }
 
   .dark {
-    --background: 222 47% 4%;
-    --foreground: 213 31% 91%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 96%;
 
-    --card: 222 47% 8%;
+    --card: 0 0% 7%;
 
-    --primary: 200 85% 50%;
-    --primary-foreground: 213 31% 91%;
+    --primary: 0 0% 96%;
+    --primary-foreground: 0 0% 4%;
 
-    --border: 217 33% 20%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 62%;
+
+    --border: 0 0% 16%;
+
+    color-scheme: dark;
   }
 
   *, *::before, *::after {
@@ -115,61 +114,69 @@
 
   html {
     @apply scroll-smooth;
+    /* Leaving room for the floating navbar when jumping to a section. */
+    scroll-padding-top: 5.5rem;
   }
 
   body {
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply bg-background text-foreground font-sans antialiased transition-colors duration-300;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::selection {
+    @apply bg-foreground text-background;
   }
 }
 
 /* These are custom utility classes for the components that will be used for the site's design. */
 @utility container {
   margin-inline: auto;
-  padding-inline: 2rem;
+  padding-inline: 1rem;
 
   /* Responsive min/max widths for different screen sizes. */
-  @media (width >= 640px) { max-width: 640px; }
+  @media (width >= 640px) { max-width: 640px; padding-inline: 1.5rem; }
   @media (width >= 768px) { max-width: 768px; }
-  @media (width >= 1024px) { max-width: 1024px; }
-  @media (width >= 1280px) { max-width: 1280px; }
-  @media (width >= 1400px) { max-width: 1400px; }
+  @media (width >= 1024px) { max-width: 1024px; padding-inline: 2rem; }
+  @media (width >= 1280px) { max-width: 1152px; }
 }
 
-@utility text-glow {
-  @apply relative;
-  text-shadow: 0 0 10px rgba(56, 189, 248, 0.6);
+/* Cards: a thin border that brightens on hover, with a soft lift. */
+@utility card {
+  @apply rounded-2xl border border-border bg-card/80 backdrop-blur-sm transition-[translate,border-color,box-shadow,background-color] duration-300;
 }
 
 @utility card-hover {
-  @apply transition-transform duration-450 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(56,189,248,0.6)];
+  @apply hover:-translate-y-1 hover:border-foreground/30 hover:shadow-[0_12px_40px_-12px_rgba(0,0,0,0.25)] dark:hover:shadow-[0_12px_40px_-12px_rgba(255,255,255,0.08)];
 }
 
-@utility gradient-border {
-  @apply relative rounded-md;
-  background: linear-gradient(to right, hsl(var(--card)), hsl(var(--card)));
-  background-clip: padding-box;
-  border: 1px solid transparent;
+/* Solid (filled) pill button. */
+@utility mono-button {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full bg-primary text-primary-foreground text-sm font-medium transition-all duration-300 hover:opacity-90 hover:scale-[1.03] active:scale-[0.97];
 }
 
-@utility cosmic-button {
-  @apply px-6 py-2 rounded-full bg-primary text-primary-foreground font-medium transition-all duration-425 hover:shadow-[0_0_20px_rgba(56,189,248,0.6)] hover:scale-103 active:scale-97;
+/* Outlined pill button. */
+@utility mono-button-outline {
+  @apply inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-full border border-foreground/20 text-foreground text-sm font-medium transition-all duration-300 hover:bg-foreground/5 hover:border-foreground/40 hover:scale-[1.03] active:scale-[0.97];
+}
+
+/* Small rounded label used for tags, dates, statuses, etc. */
+@utility chip {
+  @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/60 px-3 py-1 text-xs font-medium text-muted-foreground whitespace-nowrap;
 }
 
 @utility star {
   @apply absolute rounded-full bg-white;
-  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 6px 1px rgba(255, 255, 255, 0.3);
 }
 
 @utility meteor {
-  @apply absolute bg-gradient-to-r from-white via-white to-transparent rounded-full;
-  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.3);
+  @apply absolute bg-gradient-to-r from-white via-white/60 to-transparent rounded-full;
+  box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.15);
 }
 
-/* Getting rid of default margin/padding and centering the root div. */
+/* Getting rid of default margin/padding on the root div. */
 #root {
   max-width: 100%;
   margin: 0 auto;
   padding: 0;
-  text-align: center;
 }

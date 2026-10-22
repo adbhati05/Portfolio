@@ -2,7 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/AB_Icon.svg" />
+    <!-- Favicon: black logo on light browser tabs, white logo on dark ones (switches via a media query inside the SVG). -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Aditya Bhati - Portfolio</title>
     
@@ -23,6 +24,20 @@
     <meta property="twitter:title" content="Aditya Bhati - Portfolio" />
     <meta property="twitter:description" content="Computer Science student interested in full-stack development and ML. Check out my work." />
     <meta property="twitter:image" content="https://adityabdev.com/preview.png" />
+
+    <!-- Fonts (Geist for text, Geist Mono for small labels). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet" />
+
+    <!-- Applying the saved theme before the page paints, so there's no flash of the wrong theme. Dark is the default. -->
+    <script>
+      try {
+        if (localStorage.getItem("theme") !== "light") document.documentElement.classList.add("dark");
+      } catch {
+        document.documentElement.classList.add("dark");
+      }
+    </script>
   </head>
 
   <body>

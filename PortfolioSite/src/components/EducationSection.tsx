@@ -1,7 +1,9 @@
 import OSU from "../assets/OSU.png";
-import { GraduationCap } from "lucide-react";
-
-// TO-DO: Style university card better (specifically TOSU text and specialization text).
+import { Check, CalendarClock, CircleDashed } from "lucide-react";
+import { cn } from "../lib/utils";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+import CountUp from "./CountUp";
 
 // Array of course objects containing details about each course taken.
 const course = [
@@ -78,108 +80,94 @@ const course = [
   {
     name: "CSE 5524 - Computer Vision",
     topic: "CV & CNN Concepts",
-    status: "Enrolled",
+    status: "In-Progress",
   },
   {
     name: "CSE 5525 - Speech & Lang Proc",
     topic: "NLP Concepts",
-    status: "Enrolled",
+    status: "In-Progress",
   },
   {
     name: "CSE 5914 - AI Capstone",
     topic: "Knowledge Systems",
-    status: "Enrolled",
+    status: "In-Progress",
   }
 ];
 
-export const EducationSection = () => {
+const EducationSection = () => {
   return (
-    <section
-      id="education"
-      className="relative z-20 py-24 w-4/5 md:w-2/3 mx-auto"
-    >
-      <div className="container mx-auto max-w-5xl justify-center items-center">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          Academic <span className="text-primary"> Record </span>
-        </h2>
-      </div>
+    <section id="education" className="relative z-20 px-4 py-24 md:py-32">
+      <div className="container max-w-5xl">
+        <SectionHeading title="Academic" highlight="Record" />
 
-      <div className="w-full">
         {/* University card with degree, specialization, expected graduation date, and GPA. */}
-        <div className="bg-card py-10 px-6 rounded-xl card-hover shadow-xs w-full">
-          <div className="flex flex-col lg:flex-row gap-4 justify-between items-center mb-4">
-            <div className="flex flex-row gap-3 justify-start items-center">
-              <GraduationCap className="w-8 h-8 flex-shrink-0 text-primary" />
-              <p className="text-left text-xl lg:text-2xl text-primary font-semibold">
-                {" "}
-                Bachelor of Science - Computer Science & Engineering{" "}
-              </p>
-            </div>
-
-            <div className="flex flex-row gap-3 justify-start items-center">
-              <p className="ml-4 px-6 py-2 rounded-full border border-primary text-primary bg-primary/20">
-                Expected Dec 2026
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-4 justify-between items-center">
-            <div className="flex flex-row gap-3 justify-start items-center">
-              {" "}
-              <div className="rounded-md border border-primary p-2 w-fit flex-shrink-0">
-                <img
-                  src={OSU}
-                  alt="OSU Logo"
-                  className="w-12 h-12 sm:w-16 sm:h-16"
-                />
-              </div>
-              <div className="flex flex-col justify-start items-start">
-                {" "}
-                <p className="text-left text-md sm:text-2xl font-semibold mb-2">
-                  {" "}
-                  The Ohio State University{" "}
-                </p>
-                <p className="text-left text-sm lg:text-md font-semibold text-primary">
-                  Specialization: Artificial Intelligence
-                </p>
-              </div>
-            </div>
-
-            <p className="rounded-md bg-primary/20 px-4 py-2 border border-primary text-primary whitespace-nowrap">
-              GPA: 3.43
-            </p>
-          </div>
-        </div>
-
-        {/* Dynamically rendering courses in a grid layout, number of columns responsive to different screen sizes. */}
-        <div className="mt-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-5">
-          {course.map((course, key) => (
-            <div
-              key={key}
-              className="mt-6 p-4 border border-primary rounded-lg bg-card card-hover shadow-xs"
-            >
-              <div className="flex flex-col sm:flex-row gap-4 justify-between items-start md:items-center">
-                <div className="text-left">
-                  <h3 className="text-lg font-semibold text-left">
-                    {course.name}
-                  </h3>
-                  <p className="text-sm text-primary text-left">
-                    {course.topic}
+        <Reveal>
+          <div className="card p-6 text-left sm:p-8">
+            <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-4 sm:gap-5">
+                <div className="group shrink-0 rounded-2xl border border-border bg-background p-3">
+                  <img
+                    src={OSU}
+                    alt="OSU Logo"
+                    className="size-12 grayscale transition-all duration-500 group-hover:grayscale-0 sm:size-16"
+                  />
+                </div>
+                <div>
+                  <p className="text-xl font-semibold sm:text-2xl">
+                    The Ohio State University
+                  </p>
+                  <p className="mt-1 text-sm text-muted-foreground sm:text-base">
+                    Bachelor of Science - Computer Science & Engineering
+                  </p>
+                  <p className="mt-1 font-mono text-xs text-muted-foreground sm:text-sm">
+                    Specialization: Artificial Intelligence
                   </p>
                 </div>
+              </div>
 
-                {/* Status badge with color coding depending of if the course is completed, in progress, or enrolled. */}
-                <span
-                  className={`px-4 py-2 rounded-full text-sm font-medium ${course.status === "Completed"
-                    ? "bg-green-500/20 text-green-500"
-                    : course.status === "In-Progress"
-                      ? "bg-yellow-500/20 text-yellow-500"
-                      : "bg-purple-500/20 text-purple-500"
-                    }`}
-                >
-                  {course.status}
+              <div className="flex flex-row flex-wrap gap-3 md:flex-col md:items-end">
+                <span className="chip text-sm">
+                  <CalendarClock className="size-3.5" />
+                  Expected Dec 2026
+                </span>
+                <span className="inline-flex items-center gap-1 rounded-full bg-primary px-4 py-1.5 text-sm font-semibold text-primary-foreground">
+                  GPA:
+                  {/* The GPA counts up from 0 once the card scrolls into view. */}
+                  <CountUp value={3.43} decimals={2} />
                 </span>
               </div>
             </div>
+          </div>
+        </Reveal>
+
+        {/* Dynamically rendering courses in a grid layout, number of columns responsive to different screen sizes. */}
+        <div className="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+          {course.map((course, key) => (
+            <Reveal key={course.name} delay={(key % 2) * 0.08}>
+              <div className="card card-hover flex items-center justify-between gap-4 px-5 py-4 text-left">
+                <div className="min-w-0">
+                  <h3 className="font-medium">{course.name}</h3>
+                  <p className="text-sm text-muted-foreground">{course.topic}</p>
+                </div>
+
+                {/* Status badge: a check for completed courses, a slowly turning dashed ring for in-progress ones, and a pulsing dot for anything else (e.g. enrolled). */}
+                <span
+                  className={cn(
+                    "chip shrink-0",
+                    course.status !== "Completed" && "border-foreground/40 bg-transparent text-foreground"
+                  )}
+                >
+                  {course.status === "Completed" ? (
+                    <Check className="size-3.5" />
+                  ) : course.status === "In-Progress" ? (
+                    <CircleDashed className="size-3.5 animate-[spin_6s_linear_infinite] motion-reduce:animate-none" />
+                  ) : (
+                    <span className="size-1.5 rounded-full bg-foreground animate-pulse-subtle" />
+                  )}
+                  {course.status}
+                </span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </div>

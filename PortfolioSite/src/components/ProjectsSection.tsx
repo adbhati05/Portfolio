@@ -1,11 +1,14 @@
-import { useEffect, useState } from "react";
+import { ArrowUpRight, Globe } from "lucide-react";
+import SectionHeading from "./SectionHeading";
+import Reveal from "./Reveal";
+import ImageReveal from "./ImageReveal";
 import GitHub from "../projects/github.svg";
 import GitHubWhite from "../projects/github_white.svg";
 import Robot from "../projects/Robot.jpg";
 import SpotifyLogo from "../projects/Spotify Logo.webp";
 import MarketPrediction from "../projects/Market Prediction.jpg";
 import FitLog from "../projects/FitLog.jpg";
-import DamageDetection from "../projects/Damage Detection.webp";
+import DamageDetector from "../projects/DamageDetector.png";
 import Gallery from "../projects/Gallery.jpg";
 
 // TO-DO: Add details for each project later, don't make them exposed fully upon loading the page, have a "READ MORE" button or something similar. You can deploy the site for now, and come back to this when you have an idea of how to go into more detail for each project.
@@ -58,9 +61,10 @@ const projects = [
     description:
       "Object detection model that identifies and classifies the type of damage present on vehicles from images.",
     details: "",
-    image: DamageDetection,
-    tags: ["Python", "PyTorch", "NumPy", "YOLOv8", "Docker", "CVAT"],
+    image: DamageDetector,
+    tags: ["Python", "PyTorch", "YOLOv8", "FastAPI", "React", "Docker", "GCP"],
     githubURL: "https://github.com/adbhati05/AI-Experiments/tree/main/DamageDetector",
+    url: "https://damagedetector.adityabdev.com"
   },
   {
     id: 6,
@@ -69,141 +73,88 @@ const projects = [
     details: "",
     image: Gallery,
     tags: ["Next.js", "Tailwind", "TypeScript", "React"],
-    githubURL: "https://github.com/adbhati05/Web-Apps/tree/main/igneous-rocks"
+    githubURL: "https://github.com/adbhati05/Web-Apps/tree/main/igneous-rocks",
+    url: "https://gallery.adityabdev.com"
   }
 ];
 
-export const ProjectsSection = () => {
-  // State to track if a project has a GitHub URL (for conditional rendering of GitHub icon).
-  // It's an array of booleans corresponding to each project.
-  const [hasGitHubURLArray, setHasGitHubURLArray] = useState<boolean[]>([]);
-
-  // On component mount, check if any project has a GitHub URL.
-  useEffect(() => {
-    // Using .map to generate an array of booleans indicating presence of GitHub URLs for each project (ensuring it's not an empty string).
-    const githubURLStatus = projects.map((project) => project.githubURL !== "");
-    setHasGitHubURLArray(githubURLStatus);
-  }, []);
-
-  // Tracking if website is in dark mode or light mode by checking the document's class list for "dark" class and ensuring it's not undefined (to avoid issues during server-side rendering).
-  const [isDarkMode, setIsDarkMode] = useState(
-    () =>
-      typeof document !== "undefined" &&
-      document.documentElement.classList.contains("dark")
-  );
-
-  // This function is the same approach used in SkillsSection.tsx to track changes to the theme (dark/light mode) dynamically.
-  useEffect(() => {
-    const root = document.documentElement;
-    const sync = () => {
-      setIsDarkMode(root.classList.contains("dark"));
-    };
-    sync();
-
-    const observer = new MutationObserver((mutations) => {
-      for (const m of mutations) {
-        if (m.type === "attributes" && m.attributeName === "class") {
-          sync();
-          break;
-        }
-      }
-    });
-
-    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
-
-    return () => {
-      observer.disconnect();
-    };
-  }, []);
-
-  // This function is the same approach used in SkillsSection.tsx to set the initial isDarkMode state based on user's system preference if no theme is set in localStorage.
-  useEffect(() => {
-    if (localStorage.getItem("theme")) return;
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const apply = (matches: boolean) => setIsDarkMode(matches);
-
-    apply(mediaQuery.matches);
-
-    const handler = (e: MediaQueryListEvent) => apply(e.matches);
-    mediaQuery.addEventListener("change", handler);
-
-    return () => mediaQuery.removeEventListener("change", handler);
-  }),
-    [];
-
+const ProjectsSection = () => {
   return (
-    <section id="projects" className="py-24 px-6 relative z-20">
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
-          {" "}
-          Featured <span className="text-primary"> Projects </span>
-        </h2>
+    <section id="projects" className="relative z-20 px-4 py-24 md:py-32">
+      <div className="container max-w-6xl">
+        <SectionHeading title="Featured" highlight="Projects" />
 
         {/* Grid layout for project cards, responsive to different screen sizes. */}
         {/* Mapping through the projects array to create individual project cards. */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {projects.map((project, key) => (
-            <div
-              key={key}
-              className="group bg-card rounded-xl overflow-hidden shadow-xs card-hover flex flex-col"
-            >
-              {/* Project image with hover effect for slight zoom-in. */}
-              <div className="h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-
-              {/* Project content area that grows to push GitHub icon to bottom */}
-              <div className="p-6 flex flex-col flex-grow">
-                {/* Project tags displayed as badges. */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 text-sm font-medium rounded-full bg-primary/35 text-secondary-foreground"
-                    >
-                      {tag}
-                    </span>
-                  ))}
+            <Reveal key={project.id} delay={(key % 3) * 0.1} className="h-full">
+              <article className="card card-hover group flex h-full flex-col overflow-hidden text-left">
+                {/* Project image: wipes into view, greyscale to match the monochrome theme, fading to color and zooming slightly on hover. */}
+                <div className="overflow-hidden border-b border-border">
+                  <ImageReveal
+                    src={project.image}
+                    alt={project.name}
+                    delay={(key % 3) * 0.1 + 0.15}
+                    className="aspect-[3/2]"
+                    imgClassName="transition-[filter,scale] duration-700 group-hover:scale-[1.02]"
+                  />
                 </div>
 
-                {/* Project name and description. */}
-                <h3 className="text-xl font-semibold mb-2 text-left"> {project.name} </h3>
-                <p className="text-muted-foreground mb-4 text-left">
-                  {project.description}
-                </p>
+                {/* Project content area that grows to push GitHub link to bottom */}
+                <div className="flex flex-grow flex-col p-6">
+                  {/* Project name and description. */}
+                  <h3 className="mb-2 text-lg font-semibold">{project.name}</h3>
+                  <p className="mb-5 text-sm leading-relaxed text-muted-foreground">
+                    {project.description}
+                  </p>
 
-                {/* Project details - currently empty, can be expanded later. */}
-
-                {/* Spacer to push GitHub icon to bottom */}
-                <div className="flex-grow"></div>
-
-                {/* GitHub link icon, dynamically rendered based on if the project has a GitHub URL. */}
-                {hasGitHubURLArray[key] && (
-                  <div className="mt-4 pt-4">
-                    <a
-                      href={project.githubURL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary/20 transition-colors duration-300 group/link"
-                    >
-                      <img
-                        src={isDarkMode ? GitHubWhite : GitHub}
-                        alt="GitHub"
-                        className="h-6 w-6"
-                      />
-                      <span className="text-sm font-medium font-primary">
-                        GitHub
+                  {/* Project tags displayed as badges. */}
+                  <div className="mb-5 flex flex-wrap gap-1.5">
+                    {project.tags.map((tag) => (
+                      <span key={tag} className="chip font-mono text-[11px]">
+                        {tag}
                       </span>
-                    </a>
+                    ))}
                   </div>
-                )}
-              </div>
-            </div>
+
+                  {/* Project details - currently empty, can be expanded later. */}
+
+                  {/* Spacer to push the links to the bottom */}
+                  <div className="flex-grow" />
+
+                  {/* Project links: "Live Site" (solid) if the project has a url, and GitHub (outlined, black icon in light mode, white icon in dark mode) if it has a GitHub URL. */}
+                  <div className="flex gap-2">
+                    {project.url && (
+                      <a
+                        href={project.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mono-button group/link flex-1 gap-1.5 whitespace-nowrap px-3 py-2 sm:flex-none sm:gap-2 sm:px-4"
+                      >
+                        <Globe className="size-4" />
+                        Live Site
+                        <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                      </a>
+                    )}
+
+                    {project.githubURL !== "" && (
+                      <a
+                        href={project.githubURL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mono-button-outline group/link flex-1 gap-1.5 whitespace-nowrap px-3 py-2 sm:flex-none sm:gap-2 sm:px-4"
+                      >
+                        <img src={GitHub} alt="" className="size-4 dark:hidden" />
+                        <img src={GitHubWhite} alt="" className="hidden size-4 dark:block" />
+                        GitHub
+                        <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
       </div>

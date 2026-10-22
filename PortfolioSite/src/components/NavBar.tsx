@@ -1,152 +1,140 @@
-import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { motion, useReducedMotion } from "motion/react";
+import {
+  House,
+  User,
+  Briefcase,
+  Lightbulb,
+  FolderGit2,
+  GraduationCap,
+  Mail,
+} from "lucide-react";
 import { cn } from "../lib/utils";
-import { ThemeToggle } from "./ThemeToggle";
+import ThemeToggle from "./ThemeToggle";
+import { useSplashDone } from "../lib/splash";
 
-// Setting up an array that holds the navigation bar's items and their corresponding hrefs.
+// Setting up an array that holds the navigation bar's items, their corresponding section ids, and an icon for each.
 const navItems = [
-  { name: "Home", href: "#hero" },
-  { name: "About", href: "#about" },
-  { name: "Experience", href: "#experience" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
-  { name: "Education", href: "#education" },
-  { name: "Contact", href: "#contact" },
+  { name: "Home", id: "hero", icon: House },
+  { name: "About", id: "about", icon: User },
+  { name: "Experience", id: "experience", icon: Briefcase },
+  { name: "Skills", id: "skills", icon: Lightbulb },
+  { name: "Projects", id: "projects", icon: FolderGit2 },
+  { name: "Education", id: "education", icon: GraduationCap },
+  { name: "Contact", id: "contact", icon: Mail },
 ];
 
-// TO-DO: Figure out how to not have "Aditya Bhati's Portfolio" not take up two lines on medium-large widght screen sizes (768px to 1024px).
+// How far below the top of the viewport a section has to reach before it counts as the "current" section.
+const SPY_OFFSET = 140;
 
-export const NavBar = () => {
-  // State variable to track if the user has scrolled down the page (used for styling the navbar on scroll).
+const NavBar = () => {
+  // State variable to track if the user has scrolled down the page (used to give the floating bar a shadow).
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // State variable to track if the mobile menu is open or closed.
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Index of the section currently on screen, which gets the sliding highlight.
+  const [activeIndex, setActiveIndex] = useState(0);
 
-  // This useEffect hook adds an event listener to track scroll position and update isScrolled state accordingly.
+  // While the page smooth-scrolls after a click, the scroll spy is paused so the highlight doesn't slide through every section in between.
+  const scrollLock = useRef(false);
+  const scrollLockTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
+  const splashDone = useSplashDone();
+  const reduceMotion = useReducedMotion();
+
+  // This useEffect hook tracks the scroll position to (1) toggle the shadow and (2) work out which section is currently in view.
   useEffect(() => {
     const handleScroll = () => {
-      // If the user has scrolled more than 10 pixels down, set isScrolled to true, else set it to false.
       setIsScrolled(window.scrollY > 10);
+      if (scrollLock.current) return;
+
+      // If we've hit the bottom of the page, the last section is active even if it's too short to reach the offset.
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 4;
+      if (atBottom) {
+        setActiveIndex(navItems.length - 1);
+        return;
+      }
+
+      // Otherwise, the active section is the last one whose top has scrolled past the offset line.
+      let current = 0;
+      navItems.forEach((item, index) => {
+        const top = document.getElementById(item.id)?.getBoundingClientRect().top;
+        if (top !== undefined && top <= SPY_OFFSET) current = index;
+      });
+      setActiveIndex(current);
     };
 
-    // Adding the scroll event listener when the component mounts and removing it when the component unmounts to prevent memory leaks.
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      clearTimeout(scrollLockTimer.current);
     };
   }, []);
 
-  // This function disables background scrolling when the mobile menu is open.
-  useEffect(() => {
-    if (isMenuOpen) {
-      // Lock background scrolling when menu is open.
-      document.body.style.overflow = "hidden";
-    } else {
-      // Restore scrolling when menu is closed.
-      document.body.style.overflow = "";
-    }
-
-    // Cleanup function to reset overflow when component unmounts.
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
-
-  // This function ensures that when the window is resized to a width >= 768px (desktop view), the mobile menu is closed and scrolling is restored.
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(false);
-        document.body.style.overflow = "";
-      }
-    };
-
-    // Adding resize event listener and then cleaning it up on unmount.
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // Clicking an item highlights it right away and pauses the scroll spy until the smooth scroll has (mostly) finished.
+  const handleSelect = (index: number) => {
+    setActiveIndex(index);
+    scrollLock.current = true;
+    clearTimeout(scrollLockTimer.current);
+    scrollLockTimer.current = setTimeout(() => {
+      scrollLock.current = false;
+    }, 900);
+  };
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 w-full z-50 transition-all duration-300",
-        isScrolled ? "py-4 bg-background/80 backdrop-blur-md shadow-xs" : "py-4"
-      )}
+    // The navbar floats at the top-center of the screen as a rounded pill: section links (icons, plus labels on large screens) and the theme toggle.
+    // It drops in from above once the loading splash is gone.
+    <motion.header
+      initial={reduceMotion ? false : { y: -80, opacity: 0 }}
+      animate={splashDone ? { y: 0, opacity: 1 } : undefined}
+      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+      className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 sm:top-5"
     >
-      <div className="container flex items-center justify-between">
-        <a
-          className="text-lg md:text-xl font-bold text-primary flex items-center"
-          href="#hero"
-        >
-          <span className="relative z-20 transform transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97">
-            <span className="text-glow text-foreground"> Aditya Bhati's </span>{" "}
-            Portfolio
-          </span>
-        </a>
-
-        {/* Desktop Nav */}
-        <div className="hidden lg:flex items-center space-x-8">
-          {navItems.map((item, key) => (
+      <nav
+        aria-label="Sections"
+        className={cn(
+          "pointer-events-auto flex items-center gap-0.5 rounded-full border border-border bg-background/70 p-1 backdrop-blur-xl transition-shadow duration-300 sm:gap-1",
+          isScrolled && "shadow-[0_8px_30px_-8px_rgba(0,0,0,0.25)] dark:shadow-[0_8px_30px_-8px_rgba(0,0,0,0.8)]"
+        )}
+      >
+        {navItems.map((item, index) => {
+          const isActive = index === activeIndex;
+          const Icon = item.icon;
+          return (
             <a
-              key={key}
-              href={item.href}
-              className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
+              key={item.id}
+              href={`#${item.id}`}
+              onClick={() => handleSelect(index)}
+              aria-current={isActive ? "location" : undefined}
+              title={item.name}
+              aria-label={item.name}
+              className={cn(
+                "relative flex items-center gap-2 rounded-full px-2 py-2 text-sm font-medium transition-colors duration-300 min-[360px]:px-2.5 sm:px-3 lg:px-4",
+                isActive ? "text-background" : "text-muted-foreground hover:text-foreground"
+              )}
             >
-              {item.name}
+              {/* The highlight is one shared layout element, so it slides from the old item to the new one. */}
+              {isActive && (
+                <motion.span
+                  layoutId="nav-active-pill"
+                  className="absolute inset-0 rounded-full bg-foreground"
+                  transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
+                />
+              )}
+              <Icon className="relative size-4 shrink-0" />
+              {/* Labels only show on large screens, smaller screens get an icon-only bar that still fits on narrow phones. */}
+              <span className="relative hidden lg:inline">{item.name}</span>
             </a>
-          ))}
-          <ThemeToggle />
-        </div>
+          );
+        })}
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMenuOpen((prev) => !prev)}
-          className="lg:hidden p-2 text-foreground z-[1000]"
-        >
-          {isMenuOpen ? (
-            <X
-              size={24}
-              className="transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
-            />
-          ) : (
-            <Menu
-              size={24}
-              className="transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
-            />
-          )}
-        </button>
-
-        {/* Mobile Menu Overlay - Essentially, when opened, the menu overlays all of the content (via z-index being set to 999) and occupies the entire viewport. */}
-        {/* Also, background scrolling is disabled when the menu is open to prevent scrolling of the underlying content. */}
-        <div
-          className={cn(
-            "fixed top-0 left-0 w-full h-screen bg-background z-[999] flex flex-col items-center justify-center",
-            "transition-all duration-300 lg:hidden",
-            isMenuOpen
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          )}
-        >
-          <div className="flex flex-col justify-center items-center space-y-8 text-xl">
-            {navItems.map((item, key) => (
-              <a
-                key={key}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="text-foreground/80 font-semibold hover:text-primary hover:text-glow transition-colors transition-transform duration-450 ease-in-out hover:scale-103 active:scale-97"
-              >
-                {item.name}
-              </a>
-            ))}
-
-            <div className="pt-5">
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+        <span aria-hidden className="mx-0.5 h-5 w-px bg-border min-[360px]:mx-1" />
+        <ThemeToggle className="size-8 bg-transparent hover:bg-muted dark:bg-transparent min-[360px]:size-9" />
+      </nav>
+    </motion.header>
   );
 };
 
