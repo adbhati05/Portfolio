@@ -124,9 +124,10 @@ const NavBar = () => {
                   transition={reduceMotion ? { duration: 0 } : { type: "spring", stiffness: 380, damping: 32 }}
                 />
               )}
-              <Icon className="relative size-4 shrink-0" />
+              {/* Icons and labels sit above the sliding highlight (z-10), so it never covers one as it passes by. */}
+              <Icon className="relative z-10 size-4 shrink-0" />
               {/* Labels only show on large screens, smaller screens get an icon-only bar that still fits on narrow phones. */}
-              <span className="relative hidden lg:inline">{item.name}</span>
+              <span className="relative z-10 hidden lg:inline">{item.name}</span>
             </a>
           );
         })}

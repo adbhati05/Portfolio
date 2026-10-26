@@ -2,6 +2,7 @@ import AbleAT from "../experience/AbleAT.jpeg";
 import { CalendarDays } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
+import FocusColorImage from "./FocusColorImage";
 
 // This list contains my work experiences and details about them (company, role, duration, description, and an image representing the company).
 // Descriptions are written as "- point one - point two", and each "- " starts a new bullet point on the card.
@@ -38,10 +39,10 @@ const ExperienceSection = () => {
               <Reveal delay={key * 0.08}>
                 <article className="card card-hover group p-6 text-left sm:p-8">
                   <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-                    <img
+                    <FocusColorImage
                       src={experience.image}
                       alt={experience.company}
-                      className="size-16 shrink-0 rounded-xl border border-border object-cover grayscale transition-all duration-500 group-hover:grayscale-0 sm:size-20"
+                      className="size-16 shrink-0 rounded-xl border border-border object-cover sm:size-20"
                     />
 
                     <div className="flex-1">

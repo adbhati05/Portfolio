@@ -26,7 +26,7 @@ const ContactSection = () => {
             </p>
 
             {/* Contact links styled as buttons. */}
-            <div className="relative flex flex-col justify-center gap-3 sm:flex-row">
+            <div className="relative flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a href="mailto:adbhati75@gmail.com" className="mono-button group">
                 <Mail className="size-4" />
                 Send Email

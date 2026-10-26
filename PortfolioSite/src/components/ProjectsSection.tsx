@@ -1,4 +1,5 @@
 import { ArrowUpRight, Globe } from "lucide-react";
+import { FaYoutube } from "react-icons/fa";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
 import ImageReveal from "./ImageReveal";
@@ -10,6 +11,7 @@ import MarketPrediction from "../projects/Market Prediction.jpg";
 import FitLog from "../projects/FitLog.jpg";
 import DamageDetector from "../projects/DamageDetector.png";
 import Gallery from "../projects/Gallery.jpg";
+import Disco from "../projects/Disco.png";
 
 // TO-DO: Add details for each project later, don't make them exposed fully upon loading the page, have a "READ MORE" button or something similar. You can deploy the site for now, and come back to this when you have an idea of how to go into more detail for each project.
 
@@ -75,8 +77,21 @@ const projects = [
     tags: ["Next.js", "Tailwind", "TypeScript", "React"],
     githubURL: "https://github.com/adbhati05/Web-Apps/tree/main/igneous-rocks",
     url: "https://gallery.adityabdev.com"
+  },
+  {
+    id: 7,
+    name: "Disco",
+    description: "An AI-powered social planning platform that uses personalized agents to coordinate group outings based on friends’ preferences, availability, and budgets while keeping individual constraints private.",
+    details: "",
+    image: Disco,
+    tags: ["JavaScript", "Node.js", "SQLite", "Gemini API", "Google Maps API", "Google Places"],
+    githubURL: "https://github.com/ricky-he2006/hackio",
+    url: "https://youtu.be/sB9m9ZyX40I?si=59EZ0DDJmLrY3f37",
   }
 ];
+
+// A project's url is treated as a video demo (instead of a live site) when it points to YouTube.
+const isVideoDemo = (url: string) => /^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\//.test(url);
 
 const ProjectsSection = () => {
   return (
@@ -123,17 +138,27 @@ const ProjectsSection = () => {
                   {/* Spacer to push the links to the bottom */}
                   <div className="flex-grow" />
 
-                  {/* Project links: "Live Site" (solid) if the project has a url, and GitHub (outlined, black icon in light mode, white icon in dark mode) if it has a GitHub URL. */}
-                  <div className="flex gap-2">
+                  {/* Project links: a solid button if the project has a url ("Watch Demo" for YouTube links, "Live Site" otherwise), and GitHub (outlined, black icon in light mode, white icon in dark mode) if it has a GitHub URL. */}
+                  {/* The buttons share a row, and only wrap onto two rows when they can't both fit (very narrow phones). */}
+                  <div className="flex flex-wrap gap-2">
                     {project.url && (
                       <a
                         href={project.url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mono-button group/link flex-1 gap-1.5 whitespace-nowrap px-3 py-2 sm:flex-none sm:gap-2 sm:px-4"
+                        className="mono-button group/link gap-1.5 whitespace-nowrap px-3 py-2 xl:gap-2 xl:px-4"
                       >
-                        <Globe className="size-4" />
-                        Live Site
+                        {isVideoDemo(project.url) ? (
+                          <>
+                            <FaYoutube className="size-4" />
+                            Watch Demo
+                          </>
+                        ) : (
+                          <>
+                            <Globe className="size-4" />
+                            Live Site
+                          </>
+                        )}
                         <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover/link:-translate-y-0.5 group-hover/link:translate-x-0.5" />
                       </a>
                     )}
@@ -143,7 +168,7 @@ const ProjectsSection = () => {
                         href={project.githubURL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="mono-button-outline group/link flex-1 gap-1.5 whitespace-nowrap px-3 py-2 sm:flex-none sm:gap-2 sm:px-4"
+                        className="mono-button-outline group/link gap-1.5 whitespace-nowrap px-3 py-2 xl:gap-2 xl:px-4"
                       >
                         <img src={GitHub} alt="" className="size-4 dark:hidden" />
                         <img src={GitHubWhite} alt="" className="hidden size-4 dark:block" />

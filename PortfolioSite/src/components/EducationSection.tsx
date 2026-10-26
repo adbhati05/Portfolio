@@ -3,6 +3,7 @@ import { Check, CalendarClock, CircleDashed } from "lucide-react";
 import { cn } from "../lib/utils";
 import SectionHeading from "./SectionHeading";
 import Reveal from "./Reveal";
+import FocusColorImage from "./FocusColorImage";
 import CountUp from "./CountUp";
 
 // Array of course objects containing details about each course taken.
@@ -106,11 +107,7 @@ const EducationSection = () => {
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
               <div className="flex items-center gap-4 sm:gap-5">
                 <div className="group shrink-0 rounded-2xl border border-border bg-background p-3">
-                  <img
-                    src={OSU}
-                    alt="OSU Logo"
-                    className="size-12 grayscale transition-all duration-500 group-hover:grayscale-0 sm:size-16"
-                  />
+                  <FocusColorImage src={OSU} alt="OSU Logo" className="size-12 sm:size-16" />
                 </div>
                 <div>
                   <p className="text-xl font-semibold sm:text-2xl">
